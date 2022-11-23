@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QPixmap>
 
-
+class homepage;
 class BoardWidget;
 QT_BEGIN_NAMESPACE
 class QListWidgetItem;
@@ -27,9 +27,11 @@ private slots:
 private:
     void setupMenus();
     void setupWidgets();
+    void setuphomepage();
 
-    QPixmap pieceImage;
+//QPixmap pieceImage;
     BoardWidget *boardWidget;
+    homepage *home;
 };
 
 #endif // MAINWINDOW_H
