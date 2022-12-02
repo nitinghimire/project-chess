@@ -4,8 +4,7 @@
 #include <QPixmap>
 #include <QList>
 #include <QWidget>
-#include"mainwindow.h"
-
+#include"timer.h"
 QT_BEGIN_NAMESPACE
 class QDragEnterEvent;
 class QDropEvent;
@@ -17,7 +16,7 @@ class BoardWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit BoardWidget( QWidget *parent = nullptr);
+    explicit BoardWidget( QWidget *parent = nullptr, timer *timewidget=0);
     void clear();
 
     int pieceSize() const;
@@ -36,6 +35,8 @@ public:
 
 signals:
     void puzzleCompleted();
+public slots:
+    void gameover();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;
@@ -45,11 +46,9 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     bool rule_movement(QRect from_square,QRect to_square,int idp,int idc);
-  //  bool rule_capture(QRect from_square,QRect to_square,int idp,int idc);
-
-
 
 private:
+
     bool inbetweenpiecefinder(int ax1,int ax2,int ay1, int ay2);
     bool inbetweenpiecefinder(QRect from_square,QRect to_square);
     int findPiece(const QRect &pieceRect) const;
@@ -62,6 +61,7 @@ private:
     QRect to_square;
     QWidget* Parent;
     int left=0;
+    timer *timewidget;
 
 };
 

@@ -3,13 +3,15 @@ QT += widgets
 
 HEADERS     = mainwindow.h \
               boardwidget.h \
-              homepage.h
+              homepage.h \
+              timer.h
 RESOURCES   = \
     resources.qrc
 SOURCES     = main.cpp \
               boardwidget.cpp \
               homepage.cpp \
-              mainwindow.cpp
+              mainwindow.cpp \
+              timer.cpp
 
 #QMAKE_PROJECT_NAME = dndpuzzle
 

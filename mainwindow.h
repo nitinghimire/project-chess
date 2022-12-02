@@ -3,12 +3,10 @@
 
 #include <QMainWindow>
 #include <QPixmap>
+#include"timer.h"
 
 class homepage;
 class BoardWidget;
-QT_BEGIN_NAMESPACE
-class QListWidgetItem;
-QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -20,18 +18,21 @@ public:
 
 public slots:
     void setupBoard();
-
-private slots:
+    void setupPlay();
     void setCompleted();
+
 
 private:
     void setupMenus();
     void setupWidgets();
+public slots:
     void setuphomepage();
 
-//QPixmap pieceImage;
+private:
     BoardWidget *boardWidget;
     homepage *home;
+    timer *timewidget;
+    QWidget *Parent;
 };
 
 #endif // MAINWINDOW_H

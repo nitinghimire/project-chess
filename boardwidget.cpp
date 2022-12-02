@@ -6,7 +6,7 @@
 #include<QDebug>
 #include<QPushButton>
 #include<QMessageBox>
-BoardWidget::BoardWidget( QWidget *parent)
+BoardWidget::BoardWidget(QWidget *parent,timer *timewidget)
     : QWidget(parent)
 {
     setAcceptDrops(true);
@@ -14,6 +14,7 @@ BoardWidget::BoardWidget( QWidget *parent)
     setMaximumSize(800, 800);
     setBoard();
     Parent = parent;
+    this->timewidget=timewidget;
 }
 
 void BoardWidget::clear()
@@ -43,8 +44,6 @@ void BoardWidget::dragLeaveEvent(QDragLeaveEvent *event)
 
 void BoardWidget::dragMoveEvent(QDragMoveEvent *event)
 {
-
-
     QRect updateRect = highlightedRect.united(targetSquare(event->position().toPoint()));
      if (event->mimeData()->hasFormat(BoardWidget::puzzleMimeType())
         && (findPiece(targetSquare(event->position().toPoint())) == -1||(findPiece(targetSquare(event->position().toPoint())) != -1
@@ -201,11 +200,28 @@ void BoardWidget::dropEvent(QDropEvent *event)
      if(countkings!=2){
 
          QMessageBox box;
+         box.setStyleSheet("QLabel{background-color:#444444 ;min-width:200 px; font-size: 13px;color:white;} "
+                           "QPushButton { background-color: #999999;"
+                           "color: #ffffff;"
+                           "font-family:  Helvetica, Arial, sans-serif;"
+                           "font-size: 13px;"
+                           "margin: 0;"
+                           "padding: 10px 12px;"
+                           "text-align: center;"
+                           "vertical-align: baseline;"
+                           "white-space: nowrap;}"
+                           " QMessageBox{ "
+                           "left: 0;"
+                           "top: 0;"
+                           "width: 100%; /* Full width */"
+                           "height: 100%; /* Full height */"
+                           "background-color: #444444; /* Fallback color */"
+                           "}");
          if(win==13)
          box.setText("GAME OVER!WHITE WINS.");
          else
          box.setText("GAME OVER!BLACK WINS.");
-
+    box.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
          box.setInformativeText("Play Another One");
          box.setStandardButtons(QMessageBox::Ok|QMessageBox::Cancel);
          box.setDefaultButton(QMessageBox::Cancel);
@@ -288,6 +304,24 @@ void BoardWidget::dropEvent(QDropEvent *event)
             if((piece.id_piece==1&&targetSquare(event->position().toPoint()).y()==0)
                     ||(piece.id_piece==7&&targetSquare(event->position().toPoint()).y()==700)){
                 QMessageBox box;
+                box.setStyleSheet("QLabel{background-color:#444444 ;min-width:200 px; font-size: 13px;color:white;} "
+                                  "QPushButton { background-color: #999999;"
+                                  "color: #ffffff;"
+                                  "font-family:  Helvetica, Arial, sans-serif;"
+                                  "font-size: 13px;"
+                                  "margin: 0;"
+                                  "padding: 10px 12px;"
+                                  "text-align: center;"
+                                  "vertical-align: baseline;"
+                                  "white-space: nowrap;}"
+                                  " QMessageBox{ "
+                                  "left: 0;"
+                                  "top: 0;"
+                                  "width: 100%; /* Full width */"
+                                  "height: 100%; /* Full height */"
+                                  "background-color: #444444; /* Fallback color */"
+                                  "}");
+                box.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
                 box.setText("PROMOTION!!!");
                 QPushButton *queenButton=box.addButton("",QMessageBox::ActionRole);
                 queenButton->setIcon(QIcon(":/images/king.png"));
@@ -390,6 +424,24 @@ void BoardWidget::dropEvent(QDropEvent *event)
                     if((piece.id_piece==1&&targetSquare(event->position().toPoint()).y()==0)
                             ||(piece.id_piece==7&&targetSquare(event->position().toPoint()).y()==700)){
                         QMessageBox box;
+                        box.setStyleSheet("QLabel{background-color:#444444 ;min-width:200 px; font-size: 13px;color:white;} "
+                                          "QPushButton { background-color: #999999;"
+                                          "color: #ffffff;"
+                                          "font-family:  Helvetica, Arial, sans-serif;"
+                                          "font-size: 13px;"
+                                          "margin: 0;"
+                                          "padding: 10px 12px;"
+                                          "text-align: center;"
+                                          "vertical-align: baseline;"
+                                          "white-space: nowrap;}"
+                                          " QMessageBox{ "
+                                          "left: 0;"
+                                          "top: 0;"
+                                          "width: 100%; /* Full width */"
+                                          "height: 100%; /* Full height */"
+                                          "background-color: #444444; /* Fallback color */"
+                                          "}");
+                        box.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
                         box.setText("PROMOTION!!!");
                         QPushButton *queenButton=box.addButton("",QMessageBox::ActionRole);
                         queenButton->setIcon(QIcon(":/images/king.png"));
@@ -525,12 +577,28 @@ void BoardWidget::dropEvent(QDropEvent *event)
        }
        if(countkings!=2){
 
-           QMessageBox box;
+           QMessageBox box;box.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
            if(win==13)
            box.setText("GAME OVER!WHITE WINS.");
            else
            box.setText("GAME OVER!BLACK WINS.");
-
+           box.setStyleSheet("QLabel{background-color:#444444 ;min-width:200 px; font-size: 13px;color:white;} "
+                             "QPushButton { background-color: #999999;"
+                             "color: #ffffff;"
+                             "font-family:  Helvetica, Arial, sans-serif;"
+                             "font-size: 13px;"
+                             "margin: 0;"
+                             "padding: 10px 12px;"
+                             "text-align: center;"
+                             "vertical-align: baseline;"
+                             "white-space: nowrap;}"
+                             " QMessageBox{ "
+                             "left: 0;"
+                             "top: 0;"
+                             "width: 100%; /* Full width */"
+                             "height: 100%; /* Full height */"
+                             "background-color: #444444; /* Fallback color */"
+                             "}");
            box.setInformativeText("Play Another One");
            box.setStandardButtons(QMessageBox::Ok|QMessageBox::Cancel);
            box.setDefaultButton(QMessageBox::Cancel);
@@ -574,7 +642,6 @@ int BoardWidget::findPiece(const QRect &pieceRect) const
 
 void BoardWidget::mousePressEvent(QMouseEvent *event)
 {
-
     QRect square = targetSquare(event->position().toPoint());
     from_square = square;
     qDebug()<< from_square;
@@ -616,7 +683,7 @@ void BoardWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void BoardWidget::paintEvent(QPaintEvent *event)
+void BoardWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
 
@@ -661,7 +728,8 @@ bool BoardWidget::rule_movement(QRect from_square, QRect to_square, int idp,int 
                 if((y2==(y1-1))&&x1==x2)
                     return true;
                 else
-                if((y1==6 && y2==(y1-2))&&x1==x2&&inbetweenpiecefinder(from_square,to_square))
+                if((y1==6 && y2==(y1-2))&&x1==x2
+                        &&inbetweenpiecefinder(x1,x2,y1,y2))
                     return true;
 
             else return false;
@@ -709,7 +777,8 @@ bool BoardWidget::rule_movement(QRect from_square, QRect to_square, int idp,int 
 
                             if((y1==(y2-1))&&x2==x1)
                                 return true;
-                           else if((y1==1 && y1==(y2-2))&&x1==x2&&inbetweenpiecefinder(from_square,to_square))
+                           else if((y1==1 && y1==(y2-2))&&x1==x2
+                                   &&inbetweenpiecefinder(x1,x2,y1,y2))
                                 return true;
 
             else return false;
@@ -764,6 +833,7 @@ bool BoardWidget::rule_movement(QRect from_square, QRect to_square, int idp,int 
         }
 
 
+
             case 16:{
             if(idc==14){
                 if((y2==(y1+1))&&((x2==x1+1)||(x2==x1-1)))
@@ -773,6 +843,7 @@ bool BoardWidget::rule_movement(QRect from_square, QRect to_square, int idp,int 
             else return false;
        }
 
+    return false;
 
 
 
@@ -781,34 +852,7 @@ bool BoardWidget::rule_movement(QRect from_square, QRect to_square, int idp,int 
         return false;
 }
 
-//bool BoardWidget::rule_capture(QRect from_square, QRect to_square, int idp, int idc)
-//{
-//    int x1 =from_square.x()/100; int y1 = from_square.y()/100;
-//     int x2=to_square.x()/100; int y2= to_square.y()/100;
-//     switch(idp){
-//     case 15:{
-//         if(idc==13){
-//             if((y2==(y1-1))&&((x1==++x2)||(x1==--x2)))
-//                 return true;
 
-//         }
-//         else return false;
-//     }
-
-
-//         case 16:{
-//         if(idc==14){
-//                         if((y1==(y2-1))&&x2==x1)
-//                             return true;
-//                         if((y1==1 && y1==(y2-2))&&x1==x2)
-//                             return true;
-//                     }
-//         else return false;
-
-//    }
-//     }
-
-//}
 
 bool BoardWidget::inbetweenpiecefinder(int ax1, int ax2, int ay1, int ay2)
 {
@@ -818,64 +862,68 @@ bool BoardWidget::inbetweenpiecefinder(int ax1, int ax2, int ay1, int ay2)
          if(findPiece(rect)!=-1)
              return false;
      }
+     return true;
 
  }
- else if(ax1==ax2&&(ay2-ay1)>0){
+  if(ax1==ax2&&(ay2-ay1)>0){
      for(int i=0;i<(ay2-ay1);++i){
          QRect rect(100*ax1,100*(ay1+i),100,100);
          if(findPiece(rect)!=-1)
              return false;
      }
+     return true;
  }
- else if(ay1==ay2&&(ax1-ax2)>0){
+  if(ay1==ay2&&(ax1-ax2)>0){
      for(int i=0;i<(ax1-ax2);++i){
          QRect rect(100*(ax1-i),100*ay1,100,100);
-         if(findPiece(rect)!=-1){
-
+         if(findPiece(rect)!=-1)
              return false;
-         }
      }
+     return true;
 
  }
- else if(ay1==ay2&&(ax2-ax1)>0){
+  if(ay1==ay2&&(ax2-ax1)>0){
      for(int i=0;i<(ax2-ax1);++i){
          QRect rect(100*(ax1+i),100*ay1,100,100);
-         if(findPiece(rect)!=-1){
-
+         if(findPiece(rect)!=-1)
              return false;
-         }
      }
+     return true;
  }
-else if((ax1-ax2)>0&&(ax1-ax2)==(ay1-ay2)){
+ if((ax1-ax2)>0&&(ax1-ax2)==(ay1-ay2)){
      for(int i=0;i<(ax1-ax2);++i){
          QRect rect(100*(ax1-i),100*(ay1-i),100,100);
          if(findPiece(rect)!=-1)
              return false;
      }
+     return true;
  }
- else if((ax1-ax2)>0&&(ax1-ax2)==(ay2-ay1)){
+ if((ax1-ax2)>0&&(ax1-ax2)==(ay2-ay1)){
       for(int i=0;i<(ax1-ax2);++i){
           QRect rect(100*(ax1-i),100*(ay1+i),100,100);
           if(findPiece(rect)!=-1)
               return false;
       }
+      return true;
   }
- else if((ax2-ax1)>0&&(ax2-ax1)==(ay1-ay2)){
+ if((ax2-ax1)>0&&(ax2-ax1)==(ay1-ay2)){
       for(int i=0;i<(ax2-ax1);++i){
           QRect rect(100*(ax1+i),100*(ay1-i),100,100);
           if(findPiece(rect)!=-1)
               return false;
       }
+      return true;
   }
- else if((ax2-ax1)>0&&(ax2-ax1)==(ay2-ay1)){
+ if((ax2-ax1)>0&&(ax2-ax1)==(ay2-ay1)){
       for(int i=0;i<(ax2-ax1);++i){
           QRect rect(100*(ax1+i),100*(ay1+i),100,100);
           if(findPiece(rect)!=-1)
               return false;
       }
+      return true;
   }
- else
-     return false;
+  return false;
+
 }
 
 bool BoardWidget::inbetweenpiecefinder(QRect from_square, QRect to_square)
@@ -1004,5 +1052,53 @@ void BoardWidget::setBoard()
     update(piece.rect);
             }
     }
+    }
+}
+
+void BoardWidget::gameover()
+{
+    qDebug()<<"gameover ma pugyo";
+    if((timewidget->timeformatblack.minutes==0
+        &&timewidget->timeformatblack.seconds==0)
+            ||(timewidget->timeformatwhite.minutes==0
+               &&timewidget->timeformatwhite.seconds==0)){
+    QMessageBox box;
+    if(timewidget->timeformatblack.minutes==0&&timewidget->timeformatblack.seconds==0)
+    box.setText("GAME OVER!WHITE WINS.");
+    else if(timewidget->timeformatwhite.minutes==0&&timewidget->timeformatwhite.seconds==0)
+    box.setText("GAME OVER!BLACK WINS.");
+    else
+        qDebug()<<"gomeover pugyo nothing happened";
+    box.setInformativeText("Play Another One");
+    box.setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    box.setStandardButtons(QMessageBox::Ok|QMessageBox::Cancel);
+    box.setDefaultButton(QMessageBox::Cancel);
+    box.setStyleSheet("QLabel{background-color:#444444 ;min-width:200 px; font-size: 13px;color:white;} "
+                      "QPushButton { background-color: #999999;"
+                      "color: #ffffff;"
+                      "font-family:  Helvetica, Arial, sans-serif;"
+                      "font-size: 13px;"
+                      "margin: 0;"
+                      "padding: 10px 12px;"
+                      "text-align: center;"
+                      "vertical-align: baseline;"
+                      "white-space: nowrap;}"
+                      " QMessageBox{ "
+                      "left: 0;"
+                      "top: 0;"
+                      "width: 100%; /* Full width */"
+                      "height: 100%; /* Full height */"
+                      "background-color: #444444; /* Fallback color */"
+                      "}");
+    box.show();
+    int ret=box.exec();
+    if( ret==QMessageBox::Ok  ){
+         setBoard();
+
+}
+    else if( ret==QMessageBox::Cancel  ){
+
+    }
+
     }
 }
